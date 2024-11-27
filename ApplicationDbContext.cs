@@ -11,6 +11,10 @@ public class ApplicationDbContext : DbContext
     }
     
     public DbSet<Livro> Livros { get; set; }
+    public DbSet<Autor> Autores { get; set; }
+    public DbSet<Editora> Editoras { get; set; }
+    public DbSet<AutorLivro> AutoresLivro { get; set; }
+    public DbSet<OperacaoCompraVenda> Operacoes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -21,5 +25,9 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new LivroConfiguration());
+        modelBuilder.ApplyConfiguration(new AutorLivroConfiguration());
+        modelBuilder.ApplyConfiguration(new AutorConfiguration());
+        modelBuilder.ApplyConfiguration(new EditoraConfiguration());
+        modelBuilder.ApplyConfiguration(new OperacaoCompraVendaConfiguration());
     }
 }
