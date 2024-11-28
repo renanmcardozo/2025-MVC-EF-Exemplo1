@@ -1,0 +1,34 @@
+﻿@model LivroEditoraAutorEditViewModel
+@{
+    Layout = "_Layout";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="LivroID" value="@Model.LivroID"/>
+    <div class="form-group">
+        <label asp-for="Titulo" class="control-label"></label>
+        <input type="text" asp-for="Titulo"/>
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ano" class="control-label"></label>
+        <input type="text" asp-for="Ano"/>
+        <span asp-validation-for="Ano" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Paginas" class="control-label"></label>
+        <input type="text" asp-for="Paginas"/>
+        <span asp-validation-for="Paginas" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ISBN" class="control-label"></label>
+        <input type="text" asp-for="ISBN"/>
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraInputSelect" class="control-label"></label>
+        <select asp-for="EditoraID" asp-items="@Model.EditoraInputSelect"></select>
+        <span asp-validation-for="EditoraInputSelect" class="text-danger"></span>
+    </div>
+    <input type="submit"/>
+</form>

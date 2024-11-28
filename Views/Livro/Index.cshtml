@@ -1,7 +1,33 @@
-﻿@model Livro;
+﻿@model List<LivroEditoraAutorListViewModel>
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>Lista de livros</h2>
+<table class="table-striped table">
+    <thead>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m[0].Titulo)</th>
+        <th>@Html.DisplayNameFor(m => m[0].Ano)</th>
+        <th>@Html.DisplayNameFor(m => m[0].Paginas)</th>
+        <th>@Html.DisplayNameFor(m => m[0].ISBN)</th>
+        <th>@Html.DisplayNameFor(m => m[0].Editora)</th>
+        <th>@Html.DisplayNameFor(m => m[0].Autores)</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var livro in Model)
+    {
+        <tr>
+            <td>@livro.Titulo</td>
+            <td>@livro.Ano</td>
+            <td>@livro.Paginas</td>
+            <td>@livro.ISBN</td>
+            <td>@livro.Editora</td>
+            <td>@livro.Autores</td>
+            <td>><a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id">Editar</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
