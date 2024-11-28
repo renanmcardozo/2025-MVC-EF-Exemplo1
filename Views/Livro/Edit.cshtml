@@ -4,7 +4,7 @@
 }
 
 <form method="post">
-    <input type="hidden" asp-for="LivroID" value="@Model.LivroID"/>
+    <input type="hidden" asp-for="LivroID" value="@Model.LivroID"></input>
     <div class="form-group">
         <label asp-for="Titulo" class="control-label"></label>
         <input type="text" asp-for="Titulo"/>
@@ -28,7 +28,7 @@
     <div class="form-group">
         <label asp-for="EditoraInputSelect" class="control-label"></label>
         <select asp-for="EditoraID" asp-items="@Model.EditoraInputSelect"></select>
-        <span asp-validation-for="EditoraInputSelect" class="text-danger"></span>
+        <span asp-validation-for="EditoraID" class="text-danger"></span>
     </div>
     <input type="submit"/>
 </form>

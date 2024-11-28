@@ -57,14 +57,14 @@ public class LivroController : Controller
             .Include(p => p.EditoraDoLivro)
             .Include(p => p.AutoresDoLivro)
             .ThenInclude(p => p.Autor)
-            .FirstOrDefault(p=> p.LivroID == id);
+            .FirstOrDefault(p=> id != null && p.LivroID == id.Value);
         if (livro == null)
         {
             return NotFound();
         }
 
         var livroViewModel = new LivroEditoraAutorEditViewModel();
-        livroViewModel.LivroID = livro.LivroID;
+        livroViewModel.LivroID = id.Value;
         livroViewModel.Titulo = livro.LivroTitulo;
         livroViewModel.Ano = livro.LivroAnoPublicacao;
         livroViewModel.Paginas = livro.LivroPaginas;
@@ -78,9 +78,10 @@ public class LivroController : Controller
         return View(livroViewModel);
     }
 
+    [HttpPost, ActionName("Edit")]
     public IActionResult EditConfirm(int? id, LivroEditoraAutorEditViewModel livro)
     {
-        if (id != livro.LivroID)
+        if (id.Value != livro.LivroID)
         {
             return NotFound();
         }
@@ -88,7 +89,7 @@ public class LivroController : Controller
         if (!ModelState.IsValid)
         {
             var livroViewModel = new LivroEditoraAutorEditViewModel();
-            livroViewModel.LivroID = livro.LivroID;
+            livroViewModel.LivroID = id.Value;
             livroViewModel.Titulo = livro.Titulo;
             livroViewModel.Ano = livro.Ano;
             livroViewModel.Paginas = livro.Paginas;
@@ -99,7 +100,7 @@ public class LivroController : Controller
                 dataValueField: "EditoraID",
                 dataTextField: "EditoraNome");
 
-            return View("Edit", livroViewModel);
+            return View(livroViewModel);
         }
 
         // Alterar os dados
