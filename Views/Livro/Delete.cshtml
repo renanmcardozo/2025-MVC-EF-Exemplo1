@@ -1,0 +1,36 @@
+﻿@model LivroEditoraAutorListViewModel
+@{
+    Layout = "_Layout";
+}
+<h2>Remover o livro?</h2>
+
+<table>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.Titulo)</td>
+        <td>@Model.Titulo</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.Paginas)</td>
+        <td>@Model.Paginas</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.Ano)</td>
+        <td>@Model.Ano</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.Titulo)</td>
+        <td>@Model.Titulo</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.ISBN)</td>
+        <td>@Model.ISBN</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.Editora)</td>
+        <td>@Model.Editora</td>
+    </tr>
+</table>
+<form asp-action="Delete">
+    <input type="submit" value="Apagar" class="btn btn-danger"/>
+    <a asp-action="Index">Retornar ao índice</a>
+</form>

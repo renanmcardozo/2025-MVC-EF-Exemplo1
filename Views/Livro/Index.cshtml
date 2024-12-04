@@ -4,6 +4,8 @@
     Layout = "_Layout";
 }
 
+<p>Cadastrar <a asp-controller="Livro" asp-action="Create">novo livro</a>?</p>
+
 <table class="table-striped table">
     <thead>
     <tr>
@@ -26,7 +28,8 @@
             <td>@livro.ISBN</td>
             <td>@livro.Editora</td>
             <td>@livro.Autores</td>
-            <td><a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id">Editar</a></td>
+            <td><a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id">Editar</a> | 
+                <a asp-controller="Livro" asp-action="Delete" asp-route-id="@livro.Id">Remover</a></td>
         </tr>
     }
     </tbody>

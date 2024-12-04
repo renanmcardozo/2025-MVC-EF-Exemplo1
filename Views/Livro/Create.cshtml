@@ -1,11 +1,9 @@
 ﻿@model LivroEditoraAutorEditViewModel
 @{
-    Layout = "_Layout";
+Layout = "_Layout";
 }
 
-<form asp-action="Edit">
-    <input type="hidden" asp-for="LivroID"  value="@Model.LivroID"></input>
-
+<form asp-action="Create">
     <div class="form-group">
         <label asp-for="Titulo"></label>
         <input asp-for="Titulo" class="form-control" />
