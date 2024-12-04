@@ -53,11 +53,14 @@ public class LivroController : Controller
 
     public IActionResult Edit(int? id)
     {
+        if (id == null)
+            return RedirectToAction(nameof(Index));
+
         var livro = _contexto.Livros
             .Include(p => p.EditoraDoLivro)
             .Include(p => p.AutoresDoLivro)
             .ThenInclude(p => p.Autor)
-            .FirstOrDefault(p=> id != null && p.LivroID == id.Value);
+            .FirstOrDefault(p=> p.LivroID == id.Value);
         if (livro == null)
         {
             return NotFound();
@@ -73,7 +76,8 @@ public class LivroController : Controller
         livroViewModel.EditoraInputSelect = new SelectList(
             _contexto.Editoras.OrderBy(p => p.EditoraNome).ToList(),
             dataValueField: "EditoraID",
-            dataTextField: "EditoraNome");
+            dataTextField: "EditoraNome",
+            selectedValue: livro.EditoraID);
 
         return View(livroViewModel);
     }
@@ -81,6 +85,9 @@ public class LivroController : Controller
     [HttpPost, ActionName("Edit")]
     public IActionResult EditConfirm(int? id, LivroEditoraAutorEditViewModel livro)
     {
+        if (id == null)
+            return RedirectToAction(nameof(Index));
+
         if (id.Value != livro.LivroID)
         {
             return NotFound();
@@ -98,12 +105,13 @@ public class LivroController : Controller
             livroViewModel.EditoraInputSelect = new SelectList(
                 _contexto.Editoras.OrderBy(p => p.EditoraNome).ToList(),
                 dataValueField: "EditoraID",
-                dataTextField: "EditoraNome");
+                dataTextField: "EditoraNome",
+                selectedValue: livro.EditoraID);
 
             return View(livroViewModel);
         }
 
-        // Alterar os dados
-        return Redirect($"Livro/Index/");
+
+        return RedirectToAction(nameof(Index));
     }
 }

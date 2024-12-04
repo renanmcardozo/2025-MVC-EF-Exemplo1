@@ -3,32 +3,40 @@
     Layout = "_Layout";
 }
 
-<form method="post">
-    <input type="hidden" asp-for="LivroID" value="@Model.LivroID"></input>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="LivroID"  value="@Model.LivroID"></input>
+
     <div class="form-group">
-        <label asp-for="Titulo" class="control-label"></label>
-        <input type="text" asp-for="Titulo"/>
+        <label asp-for="Titulo"></label>
+        <input asp-for="Titulo" class="form-control" />
         <span asp-validation-for="Titulo" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="Ano" class="control-label"></label>
-        <input type="text" asp-for="Ano"/>
-        <span asp-validation-for="Ano" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Paginas" class="control-label"></label>
-        <input type="text" asp-for="Paginas"/>
+        <label asp-for="Paginas"></label>
+        <input asp-for="Paginas" class="form-control" />
         <span asp-validation-for="Paginas" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="ISBN" class="control-label"></label>
-        <input type="text" asp-for="ISBN"/>
+        <label asp-for="Ano"></label>
+        <input asp-for="Ano" class="form-control" />
+        <span asp-validation-for="Ano" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ISBN"></label>
+        <input asp-for="ISBN" class="form-control" />
         <span asp-validation-for="ISBN" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="EditoraInputSelect" class="control-label"></label>
-        <select asp-for="EditoraID" asp-items="@Model.EditoraInputSelect"></select>
+        <label asp-for="EditoraID" class="control-label"></label>
+        <select asp-for="EditoraID" asp-items="Model.EditoraInputSelect" class="form-control">
+            <option value="">Selecione a Editora</option>
+        </select>
         <span asp-validation-for="EditoraID" class="text-danger"></span>
     </div>
-    <input type="submit"/>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>

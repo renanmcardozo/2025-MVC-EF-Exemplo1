@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualBasic;
 
 namespace MVC_EF.Exemplo1.Models;
 
@@ -27,11 +25,12 @@ public class LivroEditoraAutorEditViewModel
     [Required(ErrorMessage = "É obrigatório indicar o ISBN")]
     [StringLength(13, MinimumLength = 13, ErrorMessage = "O ISBN tem 13 dígitos")]
     public string ISBN { get; set; }
-    
-    [Display (Name = "Editora")]
-    public SelectList EditoraInputSelect { get; set; }
 
+    [Display (Name = "Editora")]
     public int EditoraID { get; set; }
+
+    public SelectList? EditoraInputSelect { get; set; }
+
 }
 
 public class AnoNoPassadoValidator : ValidationAttribute
