@@ -2,52 +2,65 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MVC_EF.Exemplo1.Models;
+using X.PagedList.Extensions;
 
 namespace MVC_EF.Exemplo1.Controllers;
 
 public class LivroController : Controller
 {
     private readonly ApplicationDbContext _contexto;
+    private readonly int _pagesize;
     
-    public LivroController(ApplicationDbContext contexto)
+    public LivroController(ApplicationDbContext contexto, IConfiguration configuration)
     {
         _contexto = contexto;
+        var pagesize = Convert.ToInt32(configuration.
+            GetSection("ViewOptions").
+            GetSection("PageSize").Value);
+        _pagesize = pagesize > 0 ? pagesize : 10;
     }
-
-    // Se quiser injetar outros serviços, pode injetar um provedor de serviços, ao invés
-    // do serviço específico
-    // public LivroController(IServiceProvider serviceProvider)
-    // {
-    //     _contexto = serviceProvider.GetService<ApplicationDbContext>() ?? throw new InvalidOperationException(); 
-    // }
-
     
     // GET
-    public IActionResult Index()
+    public IActionResult Index(string? keyword, int? pagina)
     {
-        var livros = _contexto.Livros
-            .Include(p => p.EditoraDoLivro)
-            .Include(p => p.AutoresDoLivro)
-            .ThenInclude(p => p.Autor);
-
-        var rset = new List<LivroEditoraAutorListViewModel>();
-        foreach (var livro in livros)
+        IQueryable<Livro> livros = _contexto.Livros;
+        if (!string.IsNullOrEmpty(keyword))
         {
-            var r = new LivroEditoraAutorListViewModel();
-            r.Id = livro.LivroID;
-            r.Titulo = livro.LivroTitulo;
-            r.Ano = livro.LivroAnoPublicacao;
-            r.Paginas = livro.LivroPaginas;
-            r.ISBN = livro.LivroISBN;
-            r.Editora = livro.EditoraDoLivro.EditoraNome;
-            r.Autores = "";
-            foreach (var autor in livro.AutoresDoLivro)
-            {
-                r.Autores = r.Autores + autor.Autor.AutorNome + ", ";
-            }
-            rset.Add(r);
+            livros = livros
+                .Include(p => p.EditoraDoLivro)
+                .Include(p => p.AutoresDoLivro)
+                .ThenInclude(p => p.Autor)
+                .Where(p => p.LivroTitulo.ToUpper().Contains(keyword.ToUpper()))
+                .OrderBy(p => p.LivroTitulo);
+            ViewBag.keyword = keyword;
         }
+        else
+        {
+            livros = _contexto.Livros
+                .Include(p => p.EditoraDoLivro)
+                .Include(p => p.AutoresDoLivro)
+                .ThenInclude(p => p.Autor)
+                .OrderBy(p => p.LivroTitulo);
+            ViewBag.keyword = "";
+        }
+
+        var rset = livros.Select(livro => new LivroEditoraAutorListViewModel
+            {
+                Ano = livro.LivroAnoPublicacao,
+                Editora = livro.EditoraDoLivro.EditoraNome,
+                ISBN = livro.LivroISBN,
+                Paginas = livro.LivroPaginas,
+                Titulo = livro.LivroTitulo,
+                Autores = "",
+                Id = livro.LivroID
+            }).
+            ToPagedList(pagina ?? 1, _pagesize);
+
+        ViewBag.primeiro = rset.FirstItemOnPage;
+        ViewBag.ultimo = rset.LastItemOnPage;
+        ViewBag.total = rset.TotalItemCount;
         
         return View(rset);
     }

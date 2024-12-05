@@ -1,8 +1,29 @@
-﻿@model List<LivroEditoraAutorListViewModel>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<LivroEditoraAutorListViewModel>
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+
+@if (ViewBag.keyword != "")
+{
+    <div class="alert alert-secondary" role="alert">
+        Filtrando por "@ViewBag.keyword"
+    </div>
+}
+<form asp-action="Index">
+    <div class="input-group">
+        <input name="keyword" type="text" class="form-control"
+               value="@ViewBag.keyword" placeholder="Filtar por..."/>
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit">Filtrar...</button>
+        </div>
+    </div>
+</form>
+
 
 <p>Cadastrar <a asp-controller="Livro" asp-action="Create">novo livro</a>?</p>
 
@@ -34,3 +55,12 @@
     }
     </tbody>
 </table>
+<p class="small">Mostrando registros de @ViewBag.primeiro até 
+    @ViewBag.ultimo de um total de @ViewBag.total</p>
+
+@Html.PagedListPager((IPagedList)Model,
+    pagina => Url.Action("Index", new { pagina = pagina, keyword = @ViewBag.keyword }),
+    new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" } 
+    })
