@@ -11,6 +11,7 @@ public class Autor
     public string? AutorEmail { get; set; }
 
     public ICollection<AutorLivro>? LivrosDoAutor { get; set; }
+
 }
 
 public class AutorConfiguration : IEntityTypeConfiguration<Autor>

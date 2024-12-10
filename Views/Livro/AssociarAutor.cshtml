@@ -1,0 +1,28 @@
+﻿@model AdicionarAutorLivroViewModel
+@{
+    Layout = "_Layout";
+}
+<h2>Associar autores ao livro @Model.LivroTitulo</h2>
+
+<form asp-action="AssociarAutor" method="post">
+    <input type="hidden" asp-for="LivroID" />
+
+    <div>
+        <h4>Selecione os autores:</h4>
+        <ul>
+            @foreach (var author in Model.Autores)
+            {
+                <li>
+                    <input type="checkbox" name="AutoresSelecionados" value="@author.AutorID"
+                           @if (Model.AutoresSelecionados != null && Model.AutoresSelecionados.Contains(author.AutorID))
+                           {
+                               <text>checked</text>
+                           } />
+                    @author.AutorNome
+                </li>
+            }
+        </ul>
+    </div>
+
+    <button type="submit">Salvar mudanças</button>
+</form>

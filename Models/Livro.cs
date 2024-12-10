@@ -13,8 +13,8 @@ public class Livro
     public int EditoraID { get; set; }
 
     public Editora EditoraDoLivro { get; set; }
-    public ICollection<OperacaoCompraVenda> OperacoesDoLivro { get; set; }
-    public ICollection<AutorLivro> AutoresDoLivro { get; set; }
+    public ICollection<OperacaoCompraVenda>? OperacoesDoLivro { get; set; }
+    public ICollection<AutorLivro>? AutoresDoLivro { get; set; }
 }
 
 public class LivroConfiguration : IEntityTypeConfiguration<Livro>
@@ -27,6 +27,5 @@ public class LivroConfiguration : IEntityTypeConfiguration<Livro>
         builder.Property(p => p.LivroISBN).HasMaxLength(13).IsRequired();
         
         builder.HasOne<Editora>(p => p.EditoraDoLivro).WithMany(p => p.LivrosDaEditora);
-
     }
 }

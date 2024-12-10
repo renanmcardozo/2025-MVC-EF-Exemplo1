@@ -53,7 +53,9 @@ public class LivroController : Controller
                 ISBN = livro.LivroISBN,
                 Paginas = livro.LivroPaginas,
                 Titulo = livro.LivroTitulo,
-                Autores = "",
+                Autores = livro.AutoresDoLivro.Any() == true ?
+                    string.Join(", ", livro.AutoresDoLivro.Select(a => a.Autor.AutorNome))
+                    : "Sem autores definidos",
                 Id = livro.LivroID
             }).
             ToPagedList(pagina ?? 1, _pagesize);
@@ -109,18 +111,20 @@ public class LivroController : Controller
 
         if (!ModelState.IsValid)
         {
-            var livroViewModel = new LivroEditoraAutorEditViewModel();
-            livroViewModel.LivroID = id.Value;
-            livroViewModel.Titulo = livro.Titulo;
-            livroViewModel.Ano = livro.Ano;
-            livroViewModel.Paginas = livro.Paginas;
-            livroViewModel.ISBN = livro.ISBN;
-            livroViewModel.EditoraID = livro.EditoraID;
-            livroViewModel.EditoraInputSelect = new SelectList(
-                _contexto.Editoras.OrderBy(p => p.EditoraNome).ToList(),
-                dataValueField: "EditoraID",
-                dataTextField: "EditoraNome",
-                selectedValue: livro.EditoraID);
+            var livroViewModel = new LivroEditoraAutorEditViewModel
+            {
+                LivroID = id.Value,
+                Titulo = livro.Titulo,
+                Ano = livro.Ano,
+                Paginas = livro.Paginas,
+                ISBN = livro.ISBN,
+                EditoraID = livro.EditoraID,
+                EditoraInputSelect = new SelectList(
+                    _contexto.Editoras.OrderBy(p => p.EditoraNome).ToList(),
+                    dataValueField: "EditoraID",
+                    dataTextField: "EditoraNome",
+                    selectedValue: livro.EditoraID)
+            };
 
             return View(livroViewModel);
         }
@@ -282,6 +286,74 @@ public class LivroController : Controller
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult AssociarAutor(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var livro = _contexto.Livros
+            .Include(p => p.AutoresDoLivro)
+            .ThenInclude(p => p.Autor)
+            .FirstOrDefault(p => p.LivroID == id);
+        if (livro == null)
+        {
+            return NotFound();
+        }
+
+        var autores = _contexto.Autores
+            .OrderBy(a => a.AutorNome)
+            .ToList();
+
+        var viewModel = new AdicionarAutorLivroViewModel
+        {
+            LivroID = livro.LivroID,
+            LivroTitulo = livro.LivroTitulo,
+            Autores = autores,
+            AutoresSelecionados = livro.AutoresDoLivro
+                .Select(a => a.AutorID)
+                .ToList()
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public IActionResult AssociarAutor(AdicionarAutorLivroViewModel modelo)
+    {
+        if (ModelState.IsValid)
+        {
+            var autoresAtuais = _contexto.AutoresLivro
+                .Where(l => l.LivroID == modelo.LivroID)
+                .ToList();
+
+            _contexto.AutoresLivro.RemoveRange(autoresAtuais);
+            _contexto.SaveChanges();
+
+            if (modelo.AutoresSelecionados != null)
+            {
+                ushort contador = 0;
+                foreach (var autor in modelo.AutoresSelecionados)
+                {
+                    _contexto.AutoresLivro.Add(new AutorLivro
+                    {
+                        LivroID = modelo.LivroID,
+                        AutorID = autor,
+                        OrdemAutoria = contador
+                    });
+                    contador += 1;
+                }
+
+            }
+
+            _contexto.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(modelo);
     }
 
 }

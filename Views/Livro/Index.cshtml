@@ -50,7 +50,8 @@
             <td>@livro.Editora</td>
             <td>@livro.Autores</td>
             <td><a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id">Editar</a> | 
-                <a asp-controller="Livro" asp-action="Delete" asp-route-id="@livro.Id">Remover</a></td>
+                <a asp-controller="Livro" asp-action="Delete" asp-route-id="@livro.Id">Remover</a> |
+                <a asp-controller="Livro" asp-action="AssociarAutor" asp-route-id="@livro.Id">Autores</a></td>
         </tr>
     }
     </tbody>
