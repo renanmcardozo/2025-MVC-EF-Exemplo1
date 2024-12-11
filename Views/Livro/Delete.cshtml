@@ -1,36 +1,48 @@
 ﻿@model LivroEditoraAutorListViewModel
 @{
+    ViewBag.Title = "Gerenciamento de livros";
     Layout = "_Layout";
 }
-<h2>Remover o livro?</h2>
 
-<table>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.Titulo)</td>
-        <td>@Model.Titulo</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.Paginas)</td>
-        <td>@Model.Paginas</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.Ano)</td>
-        <td>@Model.Ano</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.Titulo)</td>
-        <td>@Model.Titulo</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.ISBN)</td>
-        <td>@Model.ISBN</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(m => m.Editora)</td>
-        <td>@Model.Editora</td>
-    </tr>
-</table>
+<h1 class="display-6 my-5">Removendo livro</h1>
+
 <form asp-action="Delete">
+
+    <div class="row mb-2">
+        <label asp-for="Titulo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Titulo" readonly class="px-3 form-control form-control-plaintext" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <label asp-for="Paginas" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Paginas" readonly class="px-3 form-control form-control-plaintext" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <label asp-for="Ano" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Ano" readonly class="px-3 form-control form-control-plaintext" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <label asp-for="ISBN" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ISBN" readonly class="px-3 form-control form-control-plaintext" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <label asp-for="Editora" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Editora" readonly class="px-3 form-control form-control-plaintext" />
+        </div>
+    </div>
+
     <input type="submit" value="Apagar" class="btn btn-danger"/>
-    <a asp-action="Index">Retornar ao índice</a>
+    <a asp-action="Index" class="btn btn-secondary" role="button">Retornar ao índice</a>
 </form>

@@ -4,13 +4,14 @@
 @using X.PagedList.Mvc.Core
 @model IPagedList<LivroEditoraAutorListViewModel>
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Gerenciamento de livros";
     Layout = "_Layout";
 }
 
+<h1 class="display-6 my-5">Gerenciamento de livros</h1>
 @if (ViewBag.keyword != "")
 {
-    <div class="alert alert-secondary" role="alert">
+    <div class="alert alert-success" role="alert">
         Filtrando por "@ViewBag.keyword"
     </div>
 }
@@ -49,9 +50,11 @@
             <td>@livro.ISBN</td>
             <td>@livro.Editora</td>
             <td>@livro.Autores</td>
-            <td><a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id">Editar</a> | 
-                <a asp-controller="Livro" asp-action="Delete" asp-route-id="@livro.Id">Remover</a> |
-                <a asp-controller="Livro" asp-action="AssociarAutor" asp-route-id="@livro.Id">Autores</a></td>
+            <td>
+                <a asp-controller="Livro" asp-action="Edit" asp-route-id="@livro.Id"><button type="button" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></button></a>
+                <a asp-controller="Livro" asp-action="Delete" asp-route-id="@livro.Id"><button type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button></a>
+                <a asp-controller="Livro" asp-action="AssociarAutor" asp-route-id="@livro.Id"><button type="button" class="btn btn-primary"><i class="bi bi-people"></i></button></a>
+            </td>
         </tr>
     }
     </tbody>

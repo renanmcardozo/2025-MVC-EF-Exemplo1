@@ -1,42 +1,55 @@
 ﻿@model LivroEditoraAutorEditViewModel
 @{
+    ViewBag.Title = "Gerenciamento de livros";
     Layout = "_Layout";
 }
+
+<h1 class="display-6 my-5">Editando o livro</h1>
 
 <form asp-action="Edit">
     <input type="hidden" asp-for="LivroID"  value="@Model.LivroID"></input>
 
-    <div class="form-group">
-        <label asp-for="Titulo"></label>
-        <input asp-for="Titulo" class="form-control" />
-        <span asp-validation-for="Titulo" class="text-danger"></span>
+    <div class="row mb-2">
+        <label asp-for="Titulo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Titulo" class="form-control" />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Paginas"></label>
-        <input asp-for="Paginas" class="form-control" />
-        <span asp-validation-for="Paginas" class="text-danger"></span>
+    <div class="row mb-2">
+        <label asp-for="Paginas" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Paginas" class="form-control" />
+            <span asp-validation-for="Paginas" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Ano"></label>
-        <input asp-for="Ano" class="form-control" />
-        <span asp-validation-for="Ano" class="text-danger"></span>
+    <div class="row mb-2">
+        <label asp-for="Ano" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Ano" class="form-control" />
+            <span asp-validation-for="Ano" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="ISBN"></label>
-        <input asp-for="ISBN" class="form-control" />
-        <span asp-validation-for="ISBN" class="text-danger"></span>
+    <div class="row mb-2">
+        <label asp-for="ISBN" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="EditoraID" class="control-label"></label>
-        <select asp-for="EditoraID" asp-items="Model.EditoraInputSelect" class="form-control">
-            <option value="" disabled>Selecione a Editora</option>
-        </select>
-        <span asp-validation-for="EditoraID" class="text-danger"></span>
+    <div class="row mb-2">
+        <label asp-for="EditoraID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="EditoraID" asp-items="Model.EditoraInputSelect" class="form-control form-select">
+                <option value="" disabled>Selecione a Editora</option>
+            </select>
+            <span asp-validation-for="EditoraID" class="text-danger"></span>
+        </div>
     </div>
-
     <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary" role="button">Retornar ao índice</a>
 </form>
