@@ -10,13 +10,13 @@ public class Editora
     public string? EditoraLogradouro { get; set; }
     public ushort? EditoraNumero { get; set; }
     public string? EditoraComplemento { get; set; }
-    public string EditoraCidade { get; set; }
-    public string EditoraUF { get; set; }
-    public string EditoraPais { get; set; }
+    public string? EditoraCidade { get; set; }
+    public string? EditoraUF { get; set; }
+    public string? EditoraPais { get; set; }
     public string? EditoraCEP { get; set; }
     public string? EditoraTelefone { get; set; }
 
-    public ICollection<Livro> LivrosDaEditora { get; set; }
+    public ICollection<Livro>? LivrosDaEditora { get; set; }
 
 }
 
@@ -31,9 +31,9 @@ public class EditoraConfiguration : IEntityTypeConfiguration<Editora>
         builder.Property(p => p.EditoraNome).HasMaxLength(80).IsRequired();
         builder.Property(p => p.EditoraLogradouro).HasMaxLength(80);
         builder.Property(p => p.EditoraComplemento).HasMaxLength(80);
-        builder.Property(p => p.EditoraCidade).HasMaxLength(60).IsRequired();
-        builder.Property(p => p.EditoraUF).HasMaxLength(2).IsRequired();
-        builder.Property(p => p.EditoraPais).HasMaxLength(40).IsRequired();
+        builder.Property(p => p.EditoraCidade).HasMaxLength(60);
+        builder.Property(p => p.EditoraUF).HasMaxLength(2);
+        builder.Property(p => p.EditoraPais).HasMaxLength(40);
         builder.Property(p => p.EditoraCEP).HasMaxLength(12);
         builder.Property(p => p.EditoraTelefone).HasMaxLength(15);
 
