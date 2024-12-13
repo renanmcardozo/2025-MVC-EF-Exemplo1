@@ -1,5 +1,9 @@
+/* Fontes modernas e elegantes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 html {
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -8,15 +12,142 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Cor de fundo principal */
 body {
+  background-color: #fafafa; /* Cinza claro */
   margin-bottom: 60px;
+  color: #333333; /* Texto principal em cinza escuro */
+}
+
+/* Navbar */
+.navbar {
+  background-color: #2c3e50; /* Azul petróleo */
+}
+
+.navbar .navbar-brand,
+.navbar-nav .nav-link {
+  color: #ecf0f1; /* Branco suave */
+  font-weight: 500;
+}
+
+.navbar .nav-link {
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #3498db; /* Azul suave */
+}
+
+/* Links ativos */
+.navbar .nav-item.active .nav-link {
+  color: #3498db; /* Azul suave */
+}
+
+/* Botões */
+.btn-primary {
+  background-color: #3498db; /* Azul suave */
+  border-color: #3498db;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #2980b9; /* Azul mais escuro */
+  border-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #95a5a6; /* Cinza claro */
+  border-color: #95a5a6;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #7f8c8d; /* Cinza mais escuro */
+  border-color: #7f8c8d;
+}
+
+/* Títulos e textos */
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50; /* Azul petróleo escuro */
+  font-weight: 600;
+}
+
+.text-muted {
+  color: #7f8c8d; /* Cinza médio */
+}
+
+/* Formulários */
+.form-control {
+  border-color: #bdc3c7; /* Cinza claro */
+  border-radius: 5px;
+  padding: 0.75rem 1.25rem;
+}
+
+.form-control:focus {
+  border-color: #3498db; /* Azul suave no foco */
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25); /* Azul suave */
+}
+
+button[type="submit"] {
+  background-color: #3498db; /* Azul suave */
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  background-color: #2980b9; /* Azul mais escuro */
+}
+
+/* Links */
+a {
+  color: #3498db; /* Azul suave */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2980b9; /* Azul mais escuro */
+}
+
+/* Footer */
+footer {
+  background-color: #2c3e50; /* Azul petróleo */
+  color: #ecf0f1; /* Branco suave */
+  padding: 20px;
+}
+
+footer a {
+  color: #3498db; /* Azul suave */
+}
+
+footer a:hover {
+  color: #2980b9; /* Azul mais escuro */
+}
+
+/* Logo fixada no topo direito */
+.logo-container {
+  position: fixed;
+  top: -80px;
+  right: -90px;
+  z-index: 1000;
+}
+
+.logo-fixed {
+  width: 400px;  /* Ajuste o tamanho da logo */
+  height: auto;
+}
+
+/* Ajustes de responsividade */
+@media (max-width: 767px) {
+  .navbar-collapse {
+    background-color: #2c3e50; /* Azul petróleo */
+  }
 }

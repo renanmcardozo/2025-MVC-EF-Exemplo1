@@ -2,40 +2,44 @@
 using Microsoft.EntityFrameworkCore;
 using MVC_EF.Exemplo1.Models;
 
-namespace MVC_EF.Exemplo1.Controllers;
-
-public class EditoraController : Controller
+namespace MVC_EF.Exemplo1.Controllers
 {
-    private readonly ApplicationDbContext _contexto;
-    private readonly int _pagesize;
-
-    public EditoraController(ApplicationDbContext contexto, IConfiguration configuration)
+    public class EditoraController : Controller
     {
-        _contexto = contexto;
-        var pagesize = Convert.ToInt32(configuration.
-            GetSection("ViewOptions").
-            GetSection("PageSize").Value);
-        _pagesize = pagesize > 0 ? pagesize : 10;
-    }
+        private readonly ApplicationDbContext _contexto;
+        private readonly int _pagesize;
 
-    public IActionResult Index()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IActionResult Create()
-    {
-        var novo = new EditoraEditViewModel();
-
-        return View(novo);
-    }
-
-    [HttpPost, ActionName("Create")]
-    public IActionResult CreatePost(EditoraEditViewModel editora)
-    {
-        if (!ModelState.IsValid)
+        public EditoraController(ApplicationDbContext contexto, IConfiguration configuration)
         {
-            var novo = new EditoraEditViewModel
+            _contexto = contexto;
+            var pagesize = Convert.ToInt32(configuration.
+                GetSection("ViewOptions").
+                GetSection("PageSize").Value);
+            _pagesize = pagesize > 0 ? pagesize : 10;
+        }
+
+        // Método Index: Lista as editoras
+        public IActionResult Index()
+        {
+            var editoras = _contexto.Editoras.ToList();
+            return View(editoras);
+        }
+
+        public IActionResult Create()
+        {
+            var novo = new EditoraEditViewModel();
+            return View(novo);
+        }
+
+        [HttpPost, ActionName("Create")]
+        public IActionResult CreatePost(EditoraEditViewModel editora)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(editora);
+            }
+
+            var novaEditora = new Editora
             {
                 EditoraNome = editora.EditoraNome,
                 EditoraLogradouro = editora.EditoraLogradouro,
@@ -48,35 +52,18 @@ public class EditoraController : Controller
                 EditoraTelefone = editora.EditoraTelefone
             };
 
-            return View(novo);
+            try
+            {
+                _contexto.Editoras.Add(novaEditora);
+                _contexto.SaveChanges();
+                return RedirectToAction(nameof(Index)); // Redireciona para a lista após salvar
+            }
+            catch (DbUpdateException e)
+            {
+                ModelState.AddModelError("", "Erro ao salvar a editora. Tente novamente.");
+                Console.WriteLine(e);
+                return View(editora);
+            }
         }
-
-        var novaEditora = new Editora
-        {
-            EditoraNome = editora.EditoraNome,
-            EditoraLogradouro = editora.EditoraLogradouro,
-            EditoraNumero = editora.EditoraNumero,
-            EditoraComplemento = editora.EditoraComplemento,
-            EditoraCidade = editora.EditoraCidade,
-            EditoraUF = editora.EditoraUF,
-            EditoraPais = editora.EditoraPais,
-            EditoraCEP = editora.EditoraCEP,
-            EditoraTelefone = editora.EditoraTelefone
-        };
-
-        _contexto.Editoras.Add(novaEditora);
-
-        try
-        {
-            _contexto.SaveChanges();
-        }
-        catch (DbUpdateException e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-        return RedirectToAction(nameof(Create));
     }
-
 }

@@ -22,4 +22,12 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\imagem\logo.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Views\Editora\index.cs" />
+    </ItemGroup>
+
 </Project>

@@ -1,89 +1,45 @@
-﻿@model EditoraEditViewModel
+﻿@model MVC_EF.Exemplo1.Models.EditoraEditViewModel
+
 @{
-    ViewBag.Title = "Gerenciamento de editoras";
-    Layout = "_Layout";
-}
-@section Scripts
-{
-    <script src='@Url.Content("~/js/cepautofill.js")' asp-append-version="true"></script>
+ViewData["Title"] = "Nova Editora";
 }
 
-<h1 class="display-6 my-5">Adicionando editora</h1>
+<h1 class="my-4">Adicionar Nova Editora</h1>
 
-
-<form asp-action="Create">
-    <div class="row mb-2">
-        <label asp-for="EditoraNome" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraNome" class="form-control" />
-            <span asp-validation-for="EditoraNome" class="text-danger"></span>
-        </div>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="EditoraNome">Nome</label>
+        <input asp-for="EditoraNome" class="form-control" />
+        <span asp-validation-for="EditoraNome" class="text-danger"></span>
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraCEP" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraCEP" class="form-control" />
-            <span asp-validation-for="EditoraCEP" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraLogradouro">Logradouro</label>
+        <input asp-for="EditoraLogradouro" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraLogradouro" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraLogradouro" class="form-control" />
-            <span asp-validation-for="EditoraLogradouro" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraNumero">Número</label>
+        <input asp-for="EditoraNumero" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraNumero" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraNumero" class="form-control" />
-            <span asp-validation-for="EditoraNumero" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraCidade">Cidade</label>
+        <input asp-for="EditoraCidade" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraComplemento" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraComplemento" class="form-control" />
-            <span asp-validation-for="EditoraComplemento" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraUF">UF</label>
+        <input asp-for="EditoraUF" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraCidade" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraCidade" class="form-control" />
-            <span asp-validation-for="EditoraCidade" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraPais">País</label>
+        <input asp-for="EditoraPais" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraUF" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraUF" class="form-control" />
-            <span asp-validation-for="EditoraUF" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraCEP">CEP</label>
+        <input asp-for="EditoraCEP" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraPais" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraPais" class="form-control" />
-            <span asp-validation-for="EditoraPais" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EditoraTelefone">Telefone</label>
+        <input asp-for="EditoraTelefone" class="form-control" />
     </div>
-
-    <div class="row mb-2">
-        <label asp-for="EditoraTelefone" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="EditoraTelefone" class="form-control" />
-            <span asp-validation-for="EditoraTelefone" class="text-danger"></span>
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Salvar</button>
-    <a asp-action="Index" class="btn btn-secondary" role="button">Retornar ao índice</a>
+    <button type="submit" class="btn btn-success mt-3">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Voltar</a>
 </form>
