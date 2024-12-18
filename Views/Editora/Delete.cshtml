@@ -1,0 +1,53 @@
+﻿@model MVC_EF.Exemplo1.Models.Editora
+
+@{
+ViewData["Title"] = "Remover Editora";
+}
+
+<h1 class="my-4">Remover Editora</h1>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EditoraID" />
+
+    <div class="row mb-2">
+        <label class="col-sm-2">Nome</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraNome" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2">Logradouro</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraLogradouro" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2">Número</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraNumero" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2">Cidade</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraCidade" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2">UF</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraUF" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2">Telefone</label>
+        <div class="col-sm-10">
+            <input asp-for="EditoraTelefone" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">Apagar</button>
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+</form>

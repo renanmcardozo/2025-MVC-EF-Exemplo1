@@ -1,30 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC_EF.Exemplo1.Models;
-using MVC_EF.Exemplo1;
 
 namespace MVC_EF.Exemplo1.Controllers
 {
     public class AutorController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+
         public AutorController(ApplicationDbContext context)
         {
             _context = context;
         }
-        
+
+        // INDEX
         public async Task<IActionResult> Index()
         {
             var autores = await _context.Autores.ToListAsync();
             return View("~/Views/Autor/Index.cshtml", autores);
         }
-        
+
+        // CREATE GET
         public IActionResult Create()
         {
             return View();
         }
-        
+
+        // CREATE POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AutorNome,AutorDataNascimento,AutorEmail")] Autor autor)
@@ -32,12 +34,13 @@ namespace MVC_EF.Exemplo1.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(autor);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(autor);
         }
-        
+
+        // EDIT GET
         public IActionResult Edit(int id)
         {
             var autor = _context.Autores.Find(id);
@@ -45,42 +48,54 @@ namespace MVC_EF.Exemplo1.Controllers
             {
                 return NotFound();
             }
-            return View(autor);
+
+            // Convertendo para o ViewModel
+            var viewModel = new AutorEditViewModel
+            {
+                AutorID = autor.AutorID,
+                AutorNome = autor.AutorNome,
+                AutorDataNascimento = autor.AutorDataNascimento, // Manteve como DateOnly
+                AutorEmail = autor.AutorEmail
+            };
+
+            return View(viewModel);
         }
 
+        // EDIT POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AutorID, AutorNome, AutorDataNascimento, AutorEmail")] Autor autor)
+        public IActionResult Edit(AutorEditViewModel viewModel)
         {
-            if (id != autor.AutorID)
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var autorAtualizar = _context.Autores.Find(viewModel.AutorID);
+            if (autorAtualizar == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // Atualizando os campos
+            autorAtualizar.AutorNome = viewModel.AutorNome;
+            autorAtualizar.AutorDataNascimento = viewModel.AutorDataNascimento; // Manteve como DateOnly
+            autorAtualizar.AutorEmail = viewModel.AutorEmail;
+
+            try
             {
-                try
-                {
-                    _context.Update(autor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Autores.Any(e => e.AutorID == autor.AutorID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(autor);
+            catch (DbUpdateException e)
+            {
+                ModelState.AddModelError("", "Erro ao editar o autor.");
+                Console.WriteLine(e);
+                return View(viewModel);
+            }
         }
 
-// Ação Delete para exibir a confirmação de exclusão
+        // DELETE GET
         public IActionResult Delete(int id)
         {
             var autor = _context.Autores.Find(id);
@@ -88,22 +103,33 @@ namespace MVC_EF.Exemplo1.Controllers
             {
                 return NotFound();
             }
+
             return View(autor);
         }
 
-// Ação Delete (POST) para realmente excluir o autor
+        // DELETE POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var autor = await _context.Autores.FindAsync(id);
-            if (autor != null)
+            var autor = _context.Autores.Find(id);
+            if (autor == null)
+            {
+                return NotFound();
+            }
+
+            try
             {
                 _context.Autores.Remove(autor);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            catch (DbUpdateException e)
+            {
+                ModelState.AddModelError("", "Erro ao deletar o autor.");
+                Console.WriteLine(e);
+                return View(autor);
+            }
         }
-
     }
 }

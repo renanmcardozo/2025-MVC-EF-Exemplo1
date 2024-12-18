@@ -1,0 +1,48 @@
+﻿@model MVC_EF.Exemplo1.Models.EditoraEditViewModel
+
+@{
+    ViewData["Title"] = "Editar Editora";
+}
+
+<h1 class="my-4">Editar Editora</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="EditoraID" />
+
+    <div class="form-group">
+        <label asp-for="EditoraNome">Nome</label>
+        <input asp-for="EditoraNome" class="form-control" />
+        <span asp-validation-for="EditoraNome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraLogradouro">Logradouro</label>
+        <input asp-for="EditoraLogradouro" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraNumero">Número</label>
+        <input asp-for="EditoraNumero" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraCidade">Cidade</label>
+        <input asp-for="EditoraCidade" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraUF">UF</label>
+        <input asp-for="EditoraUF" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraPais">País</label>
+        <input asp-for="EditoraPais" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraCEP">CEP</label>
+        <input asp-for="EditoraCEP" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EditoraTelefone">Telefone</label>
+        <input asp-for="EditoraTelefone" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Voltar</a>
+</form>

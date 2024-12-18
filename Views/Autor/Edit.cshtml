@@ -1,0 +1,26 @@
+﻿@model MVC_EF.Exemplo1.Models.AutorEditViewModel
+
+@{
+ViewData["Title"] = "Editar Autor";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="AutorNome"></label>
+        <input asp-for="AutorNome" class="form-control" />
+        <span asp-validation-for="AutorNome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AutorDataNascimento"></label>
+        <input asp-for="AutorDataNascimento" class="form-control" />
+        <span asp-validation-for="AutorDataNascimento" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AutorEmail"></label>
+        <input asp-for="AutorEmail" class="form-control" />
+        <span asp-validation-for="AutorEmail" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>

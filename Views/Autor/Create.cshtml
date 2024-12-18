@@ -1,40 +1,45 @@
 ﻿@model MVC_EF.Exemplo1.Models.Autor
 
 @{
-ViewData["Title"] = "Criar Autor";
+    ViewData["Title"] = "Criar Autor";  // Título da página
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"]</h1>  <!-- Título da página -->
 
 <h4>Autor</h4>
 <hr>
 
 <form asp-action="Create" method="post">
+    <!-- Formulário de criação de autor -->
     <div class="form-group">
-        <label asp-for="AutorNome" class="control-label"></label>
-        <input asp-for="AutorNome" class="form-control" />
-        <span asp-validation-for="AutorNome" class="text-danger"></span>
+        <label asp-for="AutorNome" class="control-label"></label>  <!-- Rótulo para o nome do autor -->
+        <input asp-for="AutorNome" class="form-control" />  <!-- Campo de entrada para o nome do autor -->
+        <span asp-validation-for="AutorNome" class="text-danger"></span>  <!-- Validação para o nome -->
     </div>
+
     <div class="form-group">
-        <label asp-for="AutorDataNascimento" class="control-label"></label>
-        <input asp-for="AutorDataNascimento" class="form-control" />
-        <span asp-validation-for="AutorDataNascimento" class="text-danger"></span>
+        <label asp-for="AutorDataNascimento" class="control-label"></label>  <!-- Rótulo para a data de nascimento -->
+        <input asp-for="AutorDataNascimento" class="form-control" />  <!-- Campo de entrada para a data de nascimento -->
+        <span asp-validation-for="AutorDataNascimento" class="text-danger"></span>  <!-- Validação para a data de nascimento -->
     </div>
+
     <div class="form-group">
-        <label asp-for="AutorEmail" class="control-label"></label>
-        <input asp-for="AutorEmail" class="form-control" />
-        <span asp-validation-for="AutorEmail" class="text-danger"></span>
+        <label asp-for="AutorEmail" class="control-label"></label>  <!-- Rótulo para o e-mail -->
+        <input asp-for="AutorEmail" class="form-control" />  <!-- Campo de entrada para o e-mail -->
+        <span asp-validation-for="AutorEmail" class="text-danger"></span>  <!-- Validação para o e-mail -->
     </div>
+
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>  <!-- Botão de submissão -->
     </div>
 </form>
 
+<!-- Link para voltar para a lista de autores -->
 <a href="@Url.Action("Index")">Voltar para a lista de autores</a>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "title";  // Atribuição do título da página no layout
+    Layout = "_Layout";  // Definindo o layout da página
 }
 
-<h2>title</h2>
+<h2>title</h2>  <!-- Título adicional -->
